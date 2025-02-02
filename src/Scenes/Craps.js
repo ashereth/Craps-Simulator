@@ -1,6 +1,6 @@
 class Craps extends Phaser.Scene {
     constructor() {
-        super("platformerScene");
+        super("crapsScene");
     }
 
     preload() {
