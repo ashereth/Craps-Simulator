@@ -31,7 +31,7 @@ class Craps extends Phaser.Scene {
         };
 
         this.lose = () => {
-            if (this.bank === 0){
+            if (this.bank === 0) {
                 this.bankText.setText(`Bank: $${this.bank}. You have no money left! Refesh to restart!`);
             }
             this.bets = [0, 0, 0, 0, 0, 0];
@@ -67,11 +67,11 @@ class Craps extends Phaser.Scene {
             if (this.bank < amount) {
                 this.bets[number] += this.bank;
                 this.bank = 0;
-            }else {
+            } else {
                 this.bets[number] += amount;
-            this.bank -= amount;
+                this.bank -= amount;
             }
-            
+
             this.bankText.setText(`Bank: $${this.bank}`);
             if (number === 0) {
                 this.bet4.setText("Amount bet on 4 = " + this.bets[0]);
@@ -155,12 +155,20 @@ class Craps extends Phaser.Scene {
                 } else if (pointer.button === 2) { // Right-click to clear the bet
                     this.clearBet(index);
                 }
-                betText.setText(`Amount bet on ${index + 4} = ${this.bets[index]}`);
+                if (index === 0 && this.bets[0] > 0) {
+                    betText.setText(`Amount bet on 4 = ${this.bets[index]}`);
+                } else if (index === 1 && this.bets[1] > 0) {
+                    betText.setText(`Amount bet on 5 = ${this.bets[index]}`);
+                } else if (index === 2 && this.bets[2] > 0) {
+                    betText.setText(`Amount bet on 6 = ${this.bets[index]}`);
+                } else if (index === 3 && this.bets[3] > 0) {
+                    betText.setText(`Amount bet on 8 = ${this.bets[index]}`);
+                } else if (index === 4 && this.bets[4] > 0) {
+                    betText.setText(`Amount bet on 9 = ${this.bets[index]}`);
+                } else if (index === 5 && this.bets[5] > 0) {
+                    betText.setText(`Amount bet on 10 = ${this.bets[index]}`);
+                }
             });
         });
-
-
-
     }
-
 }
