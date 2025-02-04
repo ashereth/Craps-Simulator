@@ -36,28 +36,28 @@ class Craps extends Phaser.Scene {
             }
             this.bets = [0, 0, 0, 0, 0, 0];
             this.bankText.setText(`Bank: $${this.bank}`);
-            this.bet4.setText("Amount bet on 4 = " + this.bets[0]);
-            this.bet5.setText("Amount bet on 5 = " + this.bets[1]);
-            this.bet6.setText("Amount bet on 6 = " + this.bets[2]);
-            this.bet8.setText("Amount bet on 8 = " + this.bets[3]);
-            this.bet9.setText("Amount bet on 9 = " + this.bets[4]);
-            this.bet10.setText("Amount bet on 10 = " + this.bets[5]);
+            this.bet4.setText("  4\nBet: " + this.bets[0]);
+            this.bet5.setText("  5\nBet: " + this.bets[1]);
+            this.bet6.setText("  6\nBet: " + this.bets[2]);
+            this.bet8.setText("  8\nBet: " + this.bets[3]);
+            this.bet9.setText("  9\nBet: " + this.bets[4]);
+            this.bet10.setText("  10\nBet: " + this.bets[5]);
         }
 
         this.win = (numberRolled) => {
             console.log(numberRolled);
             if (numberRolled === 4 && this.bets[0] > 0) {
-                this.bank += Math.ceil(this.bets[0] * (4 / 5));
+                this.bank += Math.ceil(this.bets[0] * (9 / 5));
             } else if (numberRolled === 5 && this.bets[1] > 0) {
-                this.bank += Math.ceil(this.bets[1] * (2 / 5));
+                this.bank += Math.ceil(this.bets[1] * (7 / 5));
             } else if (numberRolled === 6 && this.bets[2] > 0) {
-                this.bank += Math.ceil(this.bets[2] * (1 / 6));
+                this.bank += Math.ceil(this.bets[2] * (7 / 6));
             } else if (numberRolled === 8 && this.bets[3] > 0) {
-                this.bank += Math.ceil(this.bets[3] * (1 / 6));
+                this.bank += Math.ceil(this.bets[3] * (7 / 6));
             } else if (numberRolled === 9 && this.bets[4] > 0) {
-                this.bank += Math.ceil(this.bets[4] * (2 / 5));
+                this.bank += Math.ceil(this.bets[4] * (7 / 5));
             } else if (numberRolled === 10 && this.bets[5] > 0) {
-                this.bank += Math.ceil(this.bets[5] * (4 / 5));
+                this.bank += Math.ceil(this.bets[5] * (9 / 5));
             }
             //update the bank text
             this.bankText.setText(`Bank: $${this.bank}`);
@@ -74,17 +74,17 @@ class Craps extends Phaser.Scene {
 
             this.bankText.setText(`Bank: $${this.bank}`);
             if (number === 0) {
-                this.bet4.setText("Amount bet on 4 = " + this.bets[0]);
+                this.bet4.setText("  4\nBet: " + this.bets[0]);
             } else if (number === 1) {
-                this.bet5.setText("Amount bet on 5 = " + this.bets[1]);
+                this.bet5.setText("  5\nBet: " + this.bets[1]);
             } else if (number === 2) {
-                this.bet6.setText("Amount bet on 6 = " + this.bets[2]);
+                this.bet6.setText("  6\nBet: " + this.bets[2]);
             } else if (number === 3) {
-                this.bet8.setText("Amount bet on 8 = " + this.bets[3]);
+                this.bet8.setText("  8\nBet: " + this.bets[3]);
             } else if (number === 4) {
-                this.bet9.setText("Amount bet on 9 = " + this.bets[4]);
+                this.bet9.setText("  9\nBet: " + this.bets[4]);
             } else if (number === 5) {
-                this.bet10.setText("Amount bet on 10 = " + this.bets[5]);
+                this.bet10.setText("  10\nBet: " + this.bets[5]);
             }
         }
 
@@ -92,21 +92,28 @@ class Craps extends Phaser.Scene {
             if (index === 0 && this.bets[0] > 0) {
                 this.bank += this.bets[0];
                 this.bets[0] = 0;
+                //update the bet text
+                this.bet4.setText("  4\nBet: " + this.bets[0]);
             } else if (index === 1 && this.bets[1] > 0) {
                 this.bank += this.bets[1];
                 this.bets[1] = 0;
+                this.bet5.setText("  5\nBet: " + this.bets[1]);
             } else if (index === 2 && this.bets[2] > 0) {
                 this.bank += this.bets[2];
                 this.bets[2] = 0;
+                this.bet6.setText("  6\nBet: " + this.bets[2]);
             } else if (index === 3 && this.bets[3] > 0) {
                 this.bank += this.bets[3];
                 this.bets[3] = 0;
+                this.bet8.setText("  8\nBet: " + this.bets[3]);
             } else if (index === 4 && this.bets[4] > 0) {
                 this.bank += this.bets[4];
                 this.bets[4] = 0;
+                this.bet9.setText("  9\nBet: " + this.bets[4]);
             } else if (index === 5 && this.bets[5] > 0) {
                 this.bank += this.bets[5];
                 this.bets[5] = 0;
+                this.bet10.setText("  10\nBet: " + this.bets[5]);
             }
             //update the bank text
             this.bankText.setText(`Bank: $${this.bank}`);
@@ -136,12 +143,39 @@ class Craps extends Phaser.Scene {
         this.input.mouse.disableContextMenu(); // Prevent right-click menu
 
         // Create bet texts first
-        this.bet4 = this.add.text(250, 220, "Amount bet on 4 = 0", { fontSize: '32px', fill: '#FFF' });
-        this.bet5 = this.add.text(250, 270, "Amount bet on 5 = 0", { fontSize: '32px', fill: '#FFF' });
-        this.bet6 = this.add.text(250, 320, "Amount bet on 6 = 0", { fontSize: '32px', fill: '#FFF' });
-        this.bet8 = this.add.text(250, 370, "Amount bet on 8 = 0", { fontSize: '32px', fill: '#FFF' });
-        this.bet9 = this.add.text(250, 420, "Amount bet on 9 = 0", { fontSize: '32px', fill: '#FFF' });
-        this.bet10 = this.add.text(250, 470, "Amount bet on 10 = 0", { fontSize: '32px', fill: '#FFF' });
+        // Function to create a text with a background
+        this.createBetText = (x, y, text) => {
+            // Create the text object
+            let betText = this.add.text(x, y, text, {
+                fontSize: '32px',
+                fill: '#FFF',
+                align: 'center'
+            });
+
+            // Get text dimensions
+            let padding = 10;  // Space around the text
+            let width = betText.width + padding * 8;
+            let height = betText.height + padding * 2;
+
+            // Create a rectangle background
+            let background = this.add.graphics();
+            background.fillStyle(0xFFFFFF, 0.5);  // Black with 50% transparency
+            background.fillRect(x-5, y-padding, width, height);
+
+            // Ensure text is on top
+            betText.setDepth(1);
+
+            return betText;
+        }
+
+        // Create bet texts with backgrounds
+        this.bet4 = this.createBetText(100, 220, "  4\nBet: 0");
+        this.bet5 = this.createBetText(300, 220, "  5\nBet: 0");
+        this.bet6 = this.createBetText(500, 220, "  6\nBet: 0");
+        this.bet8 = this.createBetText(700, 220, "  8\nBet: 0");
+        this.bet9 = this.createBetText(900, 220, "  9\nBet: 0");
+        this.bet10 = this.createBetText(1100, 220, " 10\nBet: 0");
+
 
         // Store references to the text objects
         const betTexts = [this.bet4, this.bet5, this.bet6, this.bet8, this.bet9, this.bet10];
@@ -156,17 +190,17 @@ class Craps extends Phaser.Scene {
                     this.clearBet(index);
                 }
                 if (index === 0 && this.bets[0] > 0) {
-                    betText.setText(`Amount bet on 4 = ${this.bets[index]}`);
+                    betText.setText(`  4\nBet: ${this.bets[index]}`);
                 } else if (index === 1 && this.bets[1] > 0) {
-                    betText.setText(`Amount bet on 5 = ${this.bets[index]}`);
+                    betText.setText(`  5\nBet: ${this.bets[index]}`);
                 } else if (index === 2 && this.bets[2] > 0) {
-                    betText.setText(`Amount bet on 6 = ${this.bets[index]}`);
+                    betText.setText(`  6\nBet: ${this.bets[index]}`);
                 } else if (index === 3 && this.bets[3] > 0) {
-                    betText.setText(`Amount bet on 8 = ${this.bets[index]}`);
+                    betText.setText(`  8\nBet: ${this.bets[index]}`);
                 } else if (index === 4 && this.bets[4] > 0) {
-                    betText.setText(`Amount bet on 9 = ${this.bets[index]}`);
+                    betText.setText(`  9\nBet: ${this.bets[index]}`);
                 } else if (index === 5 && this.bets[5] > 0) {
-                    betText.setText(`Amount bet on 10 = ${this.bets[index]}`);
+                    betText.setText(`  10\nBet: ${this.bets[index]}`);
                 }
             });
         });
