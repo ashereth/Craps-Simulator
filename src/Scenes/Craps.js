@@ -6,6 +6,13 @@ class Craps extends Phaser.Scene {
 
 
     preload() {
+        this.load.setPath("./assets/");
+
+        // Load characters spritesheet
+        this.load.atlas("platformer_characters", "tilemap-characters-packed.png", "tilemap-characters-packed.json");
+        // Load tilemap information
+        this.load.image("tilemap_tiles", "tilemap_packed.png");
+        this.load.tilemapTiledJSON("crapsBackground", "crapsBackground.tmj");
     }
 
     init() {
@@ -123,6 +130,10 @@ class Craps extends Phaser.Scene {
 
     create() {
 
+        this.map = this.add.tilemap("crapsBackground", 18, 18, 60, 40);
+
+        this.tileset = this.map.addTilesetImage("Background", "tilemap_tiles");
+        this.backgroundLayer = this.map.createLayer("Background", this.tileset, 0, 0);
 
         // Result text
         this.resultText = this.add.text(250, 550, "Press Enter to Roll!", { fontSize: '32px', fill: '#FFF' });
@@ -160,7 +171,7 @@ class Craps extends Phaser.Scene {
             // Create a rectangle background
             let background = this.add.graphics();
             background.fillStyle(0xFFFFFF, 0.5);  // Black with 50% transparency
-            background.fillRect(x-5, y-padding, width, height);
+            background.fillRect(x - 5, y - padding, width, height);
 
             // Ensure text is on top
             betText.setDepth(1);
