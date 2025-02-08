@@ -16,6 +16,7 @@ class Craps extends Phaser.Scene {
 
         this.bank = 1000;
         this.betAmounts = {};
+        this.betAmount = 100;
     }
 
     init() {
@@ -65,8 +66,12 @@ class Craps extends Phaser.Scene {
 
         // Betting function 
         this.bet = (name) => {
-            if (this.bank <= 0) {
-                console.log("You have no money left");
+            if (this.bank <= this.betAmount) {
+                // Increase bet amount and update the text
+                this.betAmounts[name] += this.bank; // Increase bet by $10 (adjust as needed)
+                this[name + "Text"].setText(`$${this.betAmounts[name]}`);
+                this.bank -= this.bank;
+                this.bankText.setText("Bank: $" + this.bank);
                 return;
             }
             if (name === "Four" || name === "Five" || name === "Six" || name === "Eight" || name === "Nine" || name === "Ten") {
@@ -95,50 +100,61 @@ class Craps extends Phaser.Scene {
         //add text for the bank
         this.bankText = this.add.text(550, 450, "Bank: $" + this.bank, { fontSize: "32px", color: "#000000", fontFamily: "Arial" });
 
-        this.totalBets = (numberRolled) => {
+        this.totalNumberedBets = (numberRolled) => {
             if (numberRolled === 4) {
-                this.bank += this.betAmounts.Four * 2;
+                this.bank += Math.ceil(this.betAmounts.Four * (9 / 5));
                 this.bankText.setText("Bank: $" + this.bank);
-                this.betAmounts.Four = 0;
                 this.FourText.setText(`$${this.betAmounts.Four}`);
             }
             if (numberRolled === 5) {
-                this.bank += this.betAmounts.Five * 2;
+                this.bank += Math.ceil(this.betAmounts.Five * (7 / 5));
                 this.bankText.setText("Bank: $" + this.bank);
-                this.betAmounts.Five = 0;
                 this.FiveText.setText(`$${this.betAmounts.Five}`);
             }
             if (numberRolled === 6) {
-                this.bank += this.betAmounts.Six * 2;
+                this.bank += Math.ceil(this.betAmounts.Six * (7 / 6));
                 this.bankText.setText("Bank: $" + this.bank);
-                this.betAmounts.Six = 0;
                 this.SixText.setText(`$${this.betAmounts.Six}`);
             }
             if (numberRolled === 8) {
-                this.bank += this.betAmounts.Eight * 2;
+                this.bank += Math.ceil(this.betAmounts.Eight * (7 / 6));
                 this.bankText.setText("Bank: $" + this.bank);
-                this.betAmounts.Eight = 0;
                 this.EightText.setText(`$${this.betAmounts.Eight}`);
             }
             if (numberRolled === 9) {
-                this.bank += this.betAmounts.Nine * 2;
+                this.bank += Math.ceil(this.betAmounts.Nine * (7 / 5));
                 this.bankText.setText("Bank: $" + this.bank);
-                this.betAmounts.Nine = 0;
                 this.NineText.setText(`$${this.betAmounts.Nine}`);
             }
             if (numberRolled === 10) {
-                this.bank += this.betAmounts.Ten * 2;
+                this.bank += Math.ceil(this.betAmounts.Ten * (9 / 5));
                 this.bankText.setText("Bank: $" + this.bank);
-                this.betAmounts.Ten = 0;
                 this.TenText.setText(`$${this.betAmounts.Ten}`);
             }
         }
         // on enter 2 dice should be rolled and display the total in text
         this.rollDice = () => {
+
             let dice1 = Math.floor(Math.random() * 6) + 1;
             let dice2 = Math.floor(Math.random() * 6) + 1;
             let total = dice1 + dice2;
-            this.totalBets(total);
+            //if total == 7 then clear 
+            if (total === 7) {
+                this.betAmounts.Four = 0;
+                this.betAmounts.Five = 0;
+                this.betAmounts.Six = 0;
+                this.betAmounts.Eight = 0;
+                this.betAmounts.Nine = 0;
+                this.betAmounts.Ten = 0;
+                //update all the text
+                this.FourText.setText(`$${this.betAmounts.Four}`);
+                this.FiveText.setText(`$${this.betAmounts.Five}`);
+                this.SixText.setText(`$${this.betAmounts.Six}`);
+                this.EightText.setText(`$${this.betAmounts.Eight}`);
+                this.NineText.setText(`$${this.betAmounts.Nine}`);
+                this.TenText.setText(`$${this.betAmounts.Ten}`);
+            }
+            this.totalNumberedBets(total);
             this.diceRollText.setText("You rolled: " + total, { fontSize: "32px", color: "#000000", fontFamily: "Arial" });
         }
 
